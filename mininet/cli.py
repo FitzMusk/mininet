@@ -231,6 +231,21 @@ class CLI( Cmd ):
                 self.mn.iperf( hosts )
         else:
             error( 'invalid number of args: iperf src dst\n' )
+    
+    def do_iperfpb(self, line):
+        """Multi iperf UDP test with probablity"""
+        args = line.split()
+        if len(args) == 1:
+            udpBw = args[ 0 ]
+            self.mn.iperfMulti(udpBw)
+        elif len(args) == 2:
+            udpBw = args[ 0 ]
+            period = args[ 1 ]
+            err = False
+            self.mn.iperfPb(udpBw, float(period))
+        else:
+            error('invalid number of args: iperfmulti udpBw period\n' +
+                'udpBw examples: 1M 120\n')
 
     def do_iperfudp( self, line ):
         """Simple iperf UDP test between two (optionally specified) hosts.
